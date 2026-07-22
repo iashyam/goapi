@@ -3,35 +3,40 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 
 	"github.com/joho/godotenv"
 	"google.golang.org/genai"
 )
 
-func main() {
-
+func askAI(question string) (string, error) {
+	model := "gemini-flash-latest"
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Can't laod .env")
+		return "", err
 	}
-
-	// googeApiKey := os.Getenv("GOOGLE_API_KEY")
-	model := "gemini-flash-latest"
 	ctx := context.Background()
 	config := &genai.GenerateContentConfig{Temperature: genai.Ptr[float32](0.5)}
 	client, err := genai.NewClient(ctx, nil)
 	if err != nil {
-		log.Fatal("Can't create clinet")
+		return "", err
 	}
 	chat, err := client.Chats.Create(ctx, model, config, nil)
 	if err != nil {
-		log.Fatal("Can't create chat")
+		return "", err
 	}
-	result, err := chat.SendMessage(ctx, genai.Part{Text: "Why is the sky blue?, answer in 100 words"})
+	result, err := chat.SendMessage(ctx, genai.Part{Text: question})
 	if err != nil {
-		log.Fatal("Can't ask questions")
+		return "", err
 	}
-	fmt.Println(result.Text())
 
+	return result.Text(), nil
+}
+
+func main() {
+	question := "Why doesn't the sun run out of fuel? answer in 100 words."
+	answer, err := askAI(question)
+	if err != nil {
+		fmt.Printf("Error while asking question %v", err)
+	}
+	fmt.Println(answer)
 }
