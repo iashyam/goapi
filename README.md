@@ -2,6 +2,8 @@
 
 We want to learn the backend in Go. So we will build [Postgen](postgen.iashyam.in) in go. The postgen has the following features:
 
+Current State: Currently the GenAI framework can answer simple questions. Do put the `GOOGLE_API_KEY` in the `.env` file.
+
 - Can generate a LinkedIn post from post. 
     - Step 1: Research about the post. Include the key points. 
     - Step 2: Gereate a linkedIn post using the research point. 
