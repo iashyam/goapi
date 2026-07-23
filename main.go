@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/iashyam/goapi/api"
+	
 	"github.com/joho/godotenv"
 	"google.golang.org/genai"
 )
@@ -33,10 +35,12 @@ func askAI(question string) (string, error) {
 }
 
 func main() {
-	question := "Why doesn't the sun run out of fuel? answer in 100 words."
-	answer, err := askAI(question)
-	if err != nil {
-		fmt.Printf("Error while asking question %v", err)
-	}
+	// question := "Why doesn't the sun run out of fuel? answer in 100 words."
+	// answer, err := askAI(question)
+	// if err != nil {
+	// 	fmt.Printf("Error while asking question %v", err)
+	// }
+	answer := "hello world"
 	fmt.Println(answer)
+	PrintHelloWorld()
 }

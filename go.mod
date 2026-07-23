@@ -1,4 +1,4 @@
-module github.com/goapi
+module github.com/iashyam/goapi
 
 go 1.25.5
 
