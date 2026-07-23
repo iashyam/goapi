@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/iashyam/goapi/api"
-	
+
 	"github.com/joho/godotenv"
 	"google.golang.org/genai"
 )
@@ -17,7 +17,14 @@ func askAI(question string) (string, error) {
 		return "", err
 	}
 	ctx := context.Background()
-	config := &genai.GenerateContentConfig{Temperature: genai.Ptr[float32](0.5)}
+	config := &genai.GenerateContentConfig{
+		SystemInstruction: &genai.Content{
+			Parts: []*genai.Part{
+				{Text: "You are Chandler Bing from freinds who answers every question in a fun sarcastic way but keep them short and informative."},
+			},
+		},
+		Temperature: genai.Ptr[float32](0.5),
+	}
 	client, err := genai.NewClient(ctx, nil)
 	if err != nil {
 		return "", err
@@ -35,12 +42,11 @@ func askAI(question string) (string, error) {
 }
 
 func main() {
-	// question := "Why doesn't the sun run out of fuel? answer in 100 words."
-	// answer, err := askAI(question)
-	// if err != nil {
-	// 	fmt.Printf("Error while asking question %v", err)
-	// }
-	answer := "hello world"
+	question := "Why doesn't the sun run out of fuel? answer in 100 words."
+	answer, err := askAI(question)
+	if err != nil {
+		fmt.Printf("Error while asking question %v", err)
+	}
 	fmt.Println(answer)
-	PrintHelloWorld()
+	api.PrintHelloWorld()
 }
